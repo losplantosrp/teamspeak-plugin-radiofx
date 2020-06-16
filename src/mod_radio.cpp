@@ -26,7 +26,7 @@ Radio::Radio(TSServersInfo& servers_info, Talkers& talkers, const char* plugin_i
 void Radio::setHomeId(ts::connection_id_t sch_id)
 {
     m_home_id.store(sch_id);
-    
+
     if (sch_id != 0 && isRunning())
         m_talkers.DumpTalkStatusChanges(this, true);
 }
@@ -215,9 +215,9 @@ bool Radio::onTalkStatusChanged(ts::connection_id_t sch_id, int status, bool is_
 {
     // Tokovoip: talking state
     if (is_me && status == STATUS_TALKING)
-		sendCallback("startedtalking");
+		sendWSMessage("{\"event\": \"onTalkStatusChanged\", \"value\": \"true\"}");
 	if (is_me && status == STATUS_NOT_TALKING)
-		sendCallback("stoppedtalking");
+		sendWSMessage("{\"event\": \"onTalkStatusChanged\", \"value\": \"false\"}");
 
 	if (is_me || !isRunning())
         return false;
@@ -234,7 +234,7 @@ bool Radio::onTalkStatusChanged(ts::connection_id_t sch_id, int status, bool is_
         {
             if (is_received_whisper)
                 return m_settings_map.at("Whisper");
-            
+
             // get channel. Reminder: We don't get talk status changes for channels we're not in.
             uint64_t channel_id;
             auto error = ts3Functions.getChannelOfClient(sch_id, client_id, &channel_id);
@@ -254,7 +254,7 @@ bool Radio::onTalkStatusChanged(ts::connection_id_t sch_id, int status, bool is_
 
             if (sch_id == m_home_id.load())
                 return m_settings_map.at("Home");
-            
+
             return m_settings_map.at("Other");
         };
         auto&& settings = get_settings_ref();
