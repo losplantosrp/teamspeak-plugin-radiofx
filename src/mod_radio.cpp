@@ -215,9 +215,9 @@ bool Radio::onTalkStatusChanged(ts::connection_id_t sch_id, int status, bool is_
 {
     // Tokovoip: talking state
     if (is_me && status == STATUS_TALKING)
-		sendWSMessage("{\"event\": \"onTalkStatusChanged\", \"value\": \"true\"}");
+		sendWSMessage("onTalkStatusChanged", true);
 	if (is_me && status == STATUS_NOT_TALKING)
-		sendWSMessage("{\"event\": \"onTalkStatusChanged\", \"value\": \"false\"}");
+		sendWSMessage("onTalkStatusChanged", false);
 
 	if (is_me || !isRunning())
         return false;
