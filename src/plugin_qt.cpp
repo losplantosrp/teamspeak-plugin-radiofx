@@ -1,4 +1,4 @@
-﻿#include "plugin_qt.h"
+#include "plugin_qt.h"
 
 #include "teamspeak/clientlib_publicdefinitions.h"
 
@@ -6,6 +6,7 @@
 
 #include "mod_radio.h"
 #include "settings_radio.h"
+#include "tokovoip.h"
 
 
 const char* Plugin::kPluginName = "TokoVoip";
@@ -51,6 +52,7 @@ void Plugin::on_connect_status_changed(uint64 sch_id, int new_status, unsigned i
 void Plugin::on_client_move(uint64 sch_id, anyID client_id, uint64 old_channel_id, uint64 new_channel_id, int visibility, anyID my_id, const char * move_message)
 {
 	Q_UNUSED(move_message);
+	onTokovoipClientMove(sch_id, client_id, old_channel_id, new_channel_id, visibility, my_id, move_message);
 }
 
 void Plugin::on_client_move_timeout(uint64 sch_id, anyID client_id, uint64 old_channel_id, anyID my_id, const char * timeout_message)

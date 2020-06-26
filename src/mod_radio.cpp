@@ -20,7 +20,7 @@ Radio::Radio(TSServersInfo& servers_info, Talkers& talkers, const char* plugin_i
     m_isPrintEnabled = false;
 
     // Tokovoip: initialize
-    tokovoip.initialize((char *)plugin_id);
+    tokovoip.initialize((char *)plugin_id, parent);
 }
 
 void Radio::setHomeId(ts::connection_id_t sch_id)
