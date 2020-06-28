@@ -1,4 +1,4 @@
-#include "plugin_qt.h"
+﻿#include "plugin_qt.h"
 
 #include "teamspeak/clientlib_publicdefinitions.h"
 
@@ -42,6 +42,7 @@ void Plugin::shutdown()
 void Plugin::on_current_server_connection_changed(uint64 sch_id)
 {
 	m_radio->setHomeId(sch_id);
+	onTokovoipCurrentServerConnectionChanged(sch_id);
 }
 
 void Plugin::on_connect_status_changed(uint64 sch_id, int new_status, unsigned int error_number)
